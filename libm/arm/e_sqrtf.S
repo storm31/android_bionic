@@ -25,8 +25,8 @@
 @ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 @ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <private/bionic_asm.h>
-#include <private/libc_events.h>
+#include <machine/cpu-features.h>
+#include <machine/asm.h>
 
 ENTRY(sqrtf)
     vmov.f32    s0, r0

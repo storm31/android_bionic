@@ -94,7 +94,7 @@ ivln2_h  =  1.44269502162933349609e+00, /* 0x3FF71547, 0x60000000 =24b 1/ln2*/
 ivln2_l  =  1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
 
 double
-#if defined(KRAIT_NEON_OPTIMIZATION) || defined(QCOM_NEON_OPTIMIZATION)
+#if defined(KRAIT_NEON_OPTIMIZATION) || defined(SPARROW_NEON_OPTIMIZATION)
 __full_ieee754_pow(double x, double y)
 #else
 __ieee754_pow(double x, double y)
@@ -110,7 +110,7 @@ __ieee754_pow(double x, double y)
 	EXTRACT_WORDS(hy,ly,y);
 	ix = hx&0x7fffffff;  iy = hy&0x7fffffff;
 
-#if defined(KRAIT_NEON_OPTIMIZATION) || defined(QCOM_NEON_OPTIMIZATION)
+    /* y==zero: x**0 = 1 */
 
     if (ly == 0) {
         if (hy == ly) {
@@ -138,18 +138,6 @@ __ieee754_pow(double x, double y)
         return x+y;
     }
 
-#else
-    /* y==zero: x**0 = 1 */
-	if((iy|ly)==0) return one; 	
-
-    /* x==1: 1**y = 1, even if y is NaN */
-	if (hx==0x3ff00000 && lx == 0) return one;
-
-    /* y!=zero: result is NaN if either arg is NaN */
-	if(ix > 0x7ff00000 || ((ix==0x7ff00000)&&(lx!=0)) ||
-	   iy > 0x7ff00000 || ((iy==0x7ff00000)&&(ly!=0))) 
-		return (x+0.0)+(y+0.0);
-#endif
     /* determine if y is an odd int when x < 0
      * yisint = 0	... y is not an integer
      * yisint = 1	... y is an odd int

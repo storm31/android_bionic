@@ -45,8 +45,8 @@
 @ is preserved.
 @ ====================================================
 
-#include <private/bionic_asm.h>
-#include <private/libc_events.h>
+#include <machine/cpu-features.h>
+#include <machine/asm.h>
 
 #define vmov_f64 fconstd
 
@@ -305,14 +305,6 @@ ENTRY(cos)
 .Ltwo_over_pi_ptr:
     .word           .Ltwo_over_pi-(.LPICtwo_over_pi0+8)
 END(cos)
-
-#if (__LDBL_MANT_DIG__ == 53)
-.weak cosl
-.equ  cosl, cos
-#else
-ENTRY(cosl)
-END(cosl)
-#endif
 
     .section        .rodata.npio2_hw,"a",%progbits
     .align          2

@@ -24,8 +24,8 @@
 @ POSSIBILITY OF SUCH DAMAGE.
 
 
-#include <private/bionic_asm.h>
-#include <private/libc_events.h>
+#include <machine/cpu-features.h>
+#include <machine/asm.h>
 
 @ Values which exist the program lifetime:
 #define HIGH_WORD_MASK      d31

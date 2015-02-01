@@ -25,8 +25,8 @@
 @ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 @ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <private/bionic_asm.h>
-#include <private/libc_events.h>
+#include <machine/cpu-features.h>
+#include <machine/asm.h>
 
 ENTRY(sqrt)
     vmov.f64    d0, r0, r1
@@ -34,8 +34,3 @@ ENTRY(sqrt)
     vmov.f64    r0, r1, d0
     bx          lr
 END(sqrt)
-
-#if (__LDBL_MANT_DIG__ == 53)
-.weak sqrtl
-.equ  sqrtl, sqrt
-#endif
